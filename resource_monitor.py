@@ -36,13 +36,11 @@ def send_slack_alert(message):
     # Envoyer le message à un canal Slack spécifié
     response = client.chat_postMessage(channel='#alerts', text=message)
 
-# Fonction de surveillance des ressources
 def check_resources():
     cpu_usage = psutil.cpu_percent()
     memory_usage = psutil.virtual_memory().percent
     disk_usage = psutil.disk_usage('/').percent
 
-    # Vérifier les seuils et envoyer des alertes si nécessaire
     if cpu_usage > CPU_THRESHOLD:
         send_email_alert('CPU Alert', f'CPU usage is {cpu_usage}%')
         send_slack_alert(f'CPU usage is {cpu_usage}%')
