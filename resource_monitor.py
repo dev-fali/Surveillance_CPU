@@ -19,7 +19,6 @@ def send_email_alert(subject, message):
     smtp_username = os.getenv('SMTP_USERNAME')
     smtp_password = os.getenv('SMTP_PASSWORD')
 
-    # Création du message d'alerte  
     msg = MIMEText(message)
     msg['Subject'] = subject
     msg['From'] = smtp_username
