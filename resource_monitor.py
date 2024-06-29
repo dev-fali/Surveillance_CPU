@@ -13,7 +13,7 @@ MEMORY_THRESHOLD = 80
 DISK_THRESHOLD = 80
 
 def send_email_alert(subject, message):
-    # Configurer vos paramètres SMTP à partir des variables d'environnement
+    # Configurez vos paramètres SMTP à partir des variables d'environnement
     smtp_server = os.getenv('SMTP_SERVER')
     smtp_port = 587
     smtp_username = os.getenv('SMTP_USERNAME')
