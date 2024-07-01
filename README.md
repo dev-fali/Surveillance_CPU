@@ -22,13 +22,14 @@ On MacOs/Linux:
 
 5. Create the ".env" file
 Create a ".env" file with the following content and place it in the same directory as your script:
+```bash
 SMTP_SERVER=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USERNAME=your_email@gmail.com
 SMTP_PASSWORD=your_password
 SLACK_TOKEN=your_slack_token
-
-6. Run the Script
+```
+7. Run the Script
 
 
 
