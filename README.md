@@ -31,7 +31,7 @@ SMTP Password: Your Gmail password
 ```
 Outlook
 ```bash
-SMTP Server: smtp.smtp.office365.com
+SMTP Server: smtp.office365.com
 SMTP Port: 587 (TLS) / 465 (SSL)
 SMTP Username: Your outook/hotmail adress
 SMTP Password: Your outook/hotmail password
