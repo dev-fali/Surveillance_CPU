@@ -1,7 +1,6 @@
 import psutil
 import smtplib
 from email.mime.text import MIMEText
-from slack_sdk import WebClient
 from dotenv import load_dotenv
 import os
 import tkinter as tk
@@ -10,38 +9,33 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import threading
 import time
+import getpass
 
-# Chargez vos variables d'environnement depuis le fichier .env
-load_dotenv(dotenv_path='.env/data.env')
+CPU_THRESHOLD = int(input("Veuillez entrer le seuil d'alerte pour le CPU (en %): "))
+MEMORY_THRESHOLD = int(input("Veuillez entrer le seuil d'alerte pour la mémoire (en %): "))
+DISK_THRESHOLD = int(input("Veuillez entrer le seuil d'alerte pour le disque (en %): "))
 
-# Définissez les seuils à partir desquels vous voulez créer vos alertes
-CPU_THRESHOLD = 80
-MEMORY_THRESHOLD = 35
-DISK_THRESHOLD = 35
+alert_email = input("Veuillez entrer l'adresse e-mail pour les alertes: ")
+
+smtp_server = input("Veuillez entrer l'adresse du serveur SMTP: ")
+smtp_port = int(input("Veuillez entrer le port du serveur SMTP: "))
+smtp_username = input("Veuillez entrer votre nom d'utilisateur SMTP: ")
+smtp_password = getpass.getpass("Veuillez entrer votre mot de passe SMTP: ")
 
 def send_email_alert(subject, message):
-    # Configurez les paramètres SMTP à partir des variables d'environnement
-    smtp_server = os.getenv('SMTP_SERVER')
-    smtp_port = int(os.getenv('SMTP_PORT'))
-    smtp_username = os.getenv('SMTP_USERNAME')
-    smtp_password = os.getenv('SMTP_PASSWORD')
-
-    # Créez votre message avec vos parametres
     msg = MIMEText(message)
     msg['Subject'] = subject
     msg['From'] = smtp_username
-    msg['To'] = 'your.email@gmail.com'  
+    msg['To'] = alert_email 
 
-    with smtplib.SMTP(smtp_server, smtp_port) as server:
-        server.starttls()
-        server.login(smtp_username, smtp_password)
-        server.send_message(msg)
-
-def send_slack_alert(message):
-    slack_token = os.getenv('SLACK_TOKEN')
-    client = WebClient(token=slack_token)
-
-    response = client.chat_postMessage(channel='#alerts', text=message)
+    try:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(smtp_username, smtp_password)
+            server.send_message(msg)
+            print(f"Email alert sent to {alert_email}")
+    except Exception as e:
+        print(f"Failed to send email alert: {e}")
 
 def monitor_resources():
     while True:
@@ -53,13 +47,10 @@ def monitor_resources():
 
         if cpu_usage > CPU_THRESHOLD:
             send_email_alert('CPU Alert', f'CPU usage is {cpu_usage}%')
-            send_slack_alert(f'CPU usage is {cpu_usage}%')
         if memory_usage > MEMORY_THRESHOLD:
             send_email_alert('Memory Alert', f'Memory usage is {memory_usage}%')
-            send_slack_alert(f'Memory usage is {memory_usage}%')
         if disk_usage > DISK_THRESHOLD:
             send_email_alert('Disk Alert', f'Disk usage is {disk_usage}%')
-            send_slack_alert(f'Disk usage is {disk_usage}%')
 
         time.sleep(1)
 
@@ -109,6 +100,8 @@ disk_values = []
 
 canvas = FigureCanvasTkAgg(fig, master=root)
 canvas.get_tk_widget().pack()
+
+print("Appuyez sur Ctrl+C pour quitter l'interface.")
 
 threading.Thread(target=monitor_resources, daemon=True).start()
 
