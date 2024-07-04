@@ -33,9 +33,15 @@ def send_email_alert(subject, message):
             server.starttls()
             server.login(smtp_username, smtp_password)
             server.send_message(msg)
-            print(f"Email alert sent to {alert_email}")
+    except smtplib.SMTPAuthenticationError as e:
+        if "Username and Password not accepted" in str(e):
+            print("Erreur d'authentification: Nom d'utilisateur ou mot de passe incorrect.")
+        else:
+            print(f"Erreur d'authentification SMTP: {e}")
+    except smtplib.SMTPException as e:
+        print(f"Erreur SMTP: {e}")
     except Exception as e:
-        print(f"Failed to send email alert: {e}")
+        print(f"Erreur lors de l'envoi de l'email: {e}")
 
 def monitor_resources():
     while True:
