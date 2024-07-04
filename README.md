@@ -20,14 +20,28 @@ On MacOs/Linux:
    pip install psutil slack_sdk python-dotenv matplotlib
    ```
 
-5. Create the ".env" file
-Create a ".env" file with the following content and place it in the same directory as your script:
+5. SMTP Ports
+   Gmail
+   For Gmail you may need an App password
 ```bash
-SMTP_SERVER=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USERNAME=your_email@gmail.com
-SMTP_PASSWORD=your_password
-SLACK_TOKEN=your_slack_token
+SMTP Server: smtp.gmail.com
+SMTP Port: 587 (TLS) / 465 (SSL)
+SMTP Username: Your Gmail adress
+SMTP Password: Your Gmail password
+```
+Outlook
+```bash
+SMTP Server: smtp.smtp.office365.com
+SMTP Port: 587 (TLS) / 465 (SSL)
+SMTP Username: Your outook/hotmail adress
+SMTP Password: Your outook/hotmail password
+```
+Yahoo
+```bash
+SMTP Server: smtp.mail.yahoo.com
+SMTP Port: 587 (TLS) / 465 (SSL)
+SMTP Username: Your yahoo adress
+SMTP Password: Your yahoo password
 ```
 7. Run the Script
 
