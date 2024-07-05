@@ -11,6 +11,7 @@ import threading
 import time
 import getpass
 
+#lang = input("Choose your langage english (en) or french (fr) ?") 
 CPU_THRESHOLD = int(input("Veuillez entrer le seuil d'alerte pour le CPU (en %): "))
 MEMORY_THRESHOLD = int(input("Veuillez entrer le seuil d'alerte pour la mémoire (en %): "))
 DISK_THRESHOLD = int(input("Veuillez entrer le seuil d'alerte pour le disque (en %): "))
@@ -106,7 +107,6 @@ def update_gui(cpu, memory, disk):
 
     canvas.draw()
 
-# Initialisation de l'interface graphique
 root = tk.Tk()
 root.title('System Resource Monitor')
 
