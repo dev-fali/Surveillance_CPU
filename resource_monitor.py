@@ -56,10 +56,10 @@ def monitor_resources():
         if send_email_alerts:
             if cpu_usage > CPU_THRESHOLD:
                 send_email_alert('CPU Alert', f'CPU usage is {cpu_usage}%')
-        if memory_usage > MEMORY_THRESHOLD:
-            send_email_alert('Memory Alert', f'Memory usage is {memory_usage}%')
-        if disk_usage > DISK_THRESHOLD:
-            send_email_alert('Disk Alert', f'Disk usage is {disk_usage}%')
+            if memory_usage > MEMORY_THRESHOLD:
+                send_email_alert('Memory Alert', f'Memory usage is {memory_usage}%')
+            if disk_usage > DISK_THRESHOLD:
+             send_email_alert('Disk Alert', f'Disk usage is {disk_usage}%')
 
         time.sleep(1)
 
